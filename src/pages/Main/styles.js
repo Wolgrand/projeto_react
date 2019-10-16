@@ -4,7 +4,6 @@ export const Form = styled.form`
   margin-top: 30px;
   display: flex;
   flex-direction: row;
-  }
 `;
 
 export const Input = styled.input.attrs(props => ({

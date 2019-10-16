@@ -45,7 +45,15 @@ export default class Main extends Component {
 
       const { newRepo, repositories } = this.state;
 
+      const duplicatedRepository = repositories.find(x => x.name === newRepo);
+
+      if (duplicatedRepository) {
+        throw new Error(this.setState({ msgerror: 'Duplicated Repository' }));
+      }
+
       const response = await api.get(`/repos/${newRepo}`);
+
+      console.log(response.data.full_name);
 
       const data = {
         name: response.data.full_name,
@@ -59,11 +67,19 @@ export default class Main extends Component {
         msgerror: '',
       });
     } catch (err) {
-      this.setState({
-        notFound: true,
-        loading: false,
-        msgerror: 'Repository not found',
-      });
+      if (err.response !== undefined) {
+        this.setState({
+          notFound: true,
+          loading: false,
+          msgerror: 'Repository not found',
+        });
+      } else {
+        this.setState({
+          notFound: true,
+          loading: false,
+          msgerror: 'Repository already in the list',
+        });
+      }
     }
   };
 
