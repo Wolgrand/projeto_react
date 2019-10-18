@@ -53,8 +53,6 @@ export default class Main extends Component {
 
       const response = await api.get(`/repos/${newRepo}`);
 
-      console.log(response.data.full_name);
-
       const data = {
         name: response.data.full_name,
       };
